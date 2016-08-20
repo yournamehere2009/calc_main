@@ -16,6 +16,7 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 	html += "<form action\"/calculate/\" method=\"POST\">" +
 		"<input type=\"text\" name=\"formula\" >" +
+		"<input type=\"checkbox\" name=\"show_work\" value=\"1\"> Show your work<br>" +
 		"<input type=\"submit\" value=\"Go!\" >" +
 		"</form>"
 
