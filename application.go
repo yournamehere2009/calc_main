@@ -21,8 +21,16 @@ func handler(w http.ResponseWriter, r *http.Request) {
 		"</form>"
 
 	if r.FormValue("formula") != "" {
-		if result, err := calc.ComputeFormula(r.FormValue("formula")); err == nil {
-			html += "<div>Answer: " + strconv.FormatFloat(float64(result), 'f', -1, 64) + "</div"
+		if result, workSteps, err := calc.ComputeFormula(r.FormValue("formula")); err == nil {
+			if r.FormValue("show_work") == "1" {
+				html += "<ul>"
+				for i := 0; i < len(workSteps); i++ {
+					html += "<li>" + workSteps[i] + "</li>"
+				}
+				html += "</ul>"
+			} else {
+				html += "<div>Answer: " + strconv.FormatFloat(float64(result), 'f', -1, 64) + "</div"
+			}
 		}
 	}
 
@@ -33,5 +41,5 @@ func handler(w http.ResponseWriter, r *http.Request) {
 
 func main() {
 	http.HandleFunc("/", handler)
-	http.ListenAndServe(":5000", nil)
+	http.ListenAndServe(":8080", nil)
 }
